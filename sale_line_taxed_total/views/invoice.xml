@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record id="report_invoice_with_taxes" model="ir.ui.view">
+			<field name="name">account.report_invoice_document_with_taxes</field>
+			<field name="inherit_id" ref="account.report_invoice_document" />
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//span[@t-field='l.price_subtotal']" position="replace">
+						<span t-field="l.price_total_taxes" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<record id="account_with_taxes_invoice_line_form" model="ir.ui.view">
+			<field name="name">account.invoice.line.tree.with_taxes.view.from</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_form"/>
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='price_subtotal']" position="after">
+						<field name="price_total_taxes" groups="base.group_user"/>
+					</xpath>
+				</data>
+			</field>
+		</record>
+	</data>
+</openerp>

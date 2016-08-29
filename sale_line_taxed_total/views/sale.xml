@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record id="report_saleorder_with_taxes" model="ir.ui.view">
+			<field name="name">sale.report_saleorder_document_with_taxes</field>
+			<field name="inherit_id" ref="sale.report_saleorder_document" />
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//span[@t-field='l.price_subtotal']" position="replace">
+						<span t-field="l.price_total" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.pricelist_id.currency_id&quot;}"/>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<record id="sale_with_taxes_sale_order_line" model="ir.ui.view">
+			<field name="name">sale.oder.line.with_taxes.view.from</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//field[@name='order_line']/form//field[@name='price_subtotal']" position="after">
+						<field name="price_total" groups="base.group_user" invisible="True"/>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<record id="sale_with_taxes_sale_order_line_form" model="ir.ui.view">
+			<field name="name">sale.oder.line.tree.with_taxes.view.from</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//field[@name='order_line']/tree//field[@name='price_subtotal']" position="after">
+						<field name="price_total" groups="base.group_user"/>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+	</data>
+</openerp>
